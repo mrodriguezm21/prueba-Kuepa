@@ -21,16 +21,19 @@ const addMessage = (message) => {
   myMessage.save();
 };
 
-const getMessages = async (filterUser) => {
+const getMessages = async (filterByUser, filterByLesson) => {
   let filter = {};
-  if (filterUser !== null) {
-    filter = { user: filterUser };
+  if (filterByUser) {
+    filter = { user: filterByUser };
+  } else if (filterByLesson) {
+    filter = { lesson: filterByLesson };
   }
+
   try {
-    const messages = await Model.find(filter).populate('user', {
+    const messages = await Model.find(filter).populate("user", {
       username: true,
       name: true,
-    });
+    }).populate("lesson", {});
     return messages;
   } catch (error) {
     console.error(error);
@@ -61,7 +64,7 @@ const getMessages = async (filterUser) => {
 
 const getMessage = async (id) => {
   try {
-    const message = await Model.findById(id).populate('user', {
+    const message = await Model.findById(id).populate("user", {
       username: true,
       name: true,
     });
@@ -73,10 +76,10 @@ const getMessage = async (id) => {
 
 const getMessageByUserId = async (id) => {
   try {
-    const message = await Model.find({user: id}).populate('user', {
+    const message = await Model.find({ user: id }).populate("user", {
       username: true,
       name: true,
-    });;
+    });
     return message;
   } catch (error) {
     console.error(error);

@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const messageSchema = new Schema({
+    lesson: {
+        type: Schema.ObjectId,
+        ref: "Lesson",
+    },
     user: {
         type: Schema.ObjectId,
         ref: "User",

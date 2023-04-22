@@ -4,14 +4,15 @@ const logger = require("../utils/logger");
 const controller_name = "messageController";
 
 const addMessage = (message) => {
-  const { user, content } = message;
+  const { user, content, lesson } = message;
 
   return new Promise((resolve, reject) => {
-    if (!user || !content) {
+    if (!user || !content || !lesson) {
       console.error(logger("Faltan datos", controller_name, "ERROR"));
-      return reject("Los datos son incorrectos");
+      return reject(400,"Los datos son incorrectos");
     }
     const newMessage = {
+      lesson: lesson,
       user: user,
       content: content,
       createdAt: new Date(),
@@ -21,10 +22,10 @@ const addMessage = (message) => {
   });
 };
 
-const getMessages = (filter) => {
+const getMessages = (filterByUser, filterByLesson) => {
   return new Promise((resolve, reject) => {
     try {
-      resolve(store.list(filter));
+      resolve(store.list(filterByUser, filterByLesson));
     } catch (error) {
       reject(500, "Error interno");
     }

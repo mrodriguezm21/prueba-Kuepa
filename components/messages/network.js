@@ -5,9 +5,9 @@ const controller = require("./controller");
 const response = require("../../network/response");
 
 app.get("/", async (req, res) => {
-  const filterMessages = req.query.user || null;
+  const {filterByUser, filterByLesson } = req.query;
   try {
-    let messages = await controller.getMessages(filterMessages);
+    let messages = await controller.getMessages(filterByUser, filterByLesson);
     response.success(req, res, messages, 200);
   } catch (error) {
     response.error(req, res, "Unexpected Error", 500, error);
