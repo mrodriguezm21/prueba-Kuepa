@@ -5,17 +5,40 @@ const controller = require("./controller");
 const response = require("../../network/response");
 
 app.get("/", async (req, res) => {
+  const filterMessages = req.query.user || null;
   try {
-    let messages = await controller.getMessages();
+    let messages = await controller.getMessages(filterMessages);
     response.success(req, res, messages, 200);
   } catch (error) {
     response.error(req, res, "Unexpected Error", 500, error);
   }
 });
 
+// app.get("/userdata", async (req, res) => {
+//   try {
+//     let messages = await controller.getMessagesWithData();
+//     response.success(req, res, messages, 200);
+//   } catch (error) {
+//     response.error(req, res, "Unexpected Error", 500, error);
+//   }
+// });
+
 app.get("/:id", async (req, res) => {
   try {
     let message = await controller.getMessage(req.params.id);
+    response.success(req, res, message, 200);
+  } catch (error) {
+    if (error === 404) {
+      response.error(req, res, "Message not found", 404, error);
+      return;
+    }
+    response.error(req, res, "Unexpected Error", 500, error);
+  }
+});
+
+app.get("/user/:id", async (req, res) => {
+  try {
+    let message = await controller.getMessageByUserId(req.params.id);
     response.success(req, res, message, 200);
   } catch (error) {
     if (error === 404) {
