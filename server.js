@@ -1,21 +1,28 @@
 // Description: This file is the entry point of the application
 const express = require("express");
+const cors = require('cors');
+const app = express();
+const server = require("http").Server(app);
+
+
+
+const config = require("./config");
+require('dotenv').config()
+
+const db = require('./db');
+db(config.dbUrl);
+
 const routes = require("./network/routes");
 
-require("dotenv").config();
-
-let port = process.env.PORT || 3000;
-const app = express();
-
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
 
 
 routes(app);
 
 // app.use('/app', express.static('public'));	
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+server.listen(config.port, () => {
+  console.log(`Server is running on ${config.host}:${config.port}`);
 });

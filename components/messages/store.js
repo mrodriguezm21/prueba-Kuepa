@@ -1,20 +1,4 @@
-require("dotenv").config();
-const db = require("mongoose");
 const Model = require("./model");
-// const userModel = require("../users/model");
-
-const mongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@kuepa.df0anbl.mongodb.net/test`;
-db.Promise = global.Promise;
-db.connect(mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  dbName: "series",
-});
-try {
-  console.log("[db] Conectada con éxito");
-} catch (error) {
-  console.error("[db]", error);
-}
 
 const addMessage = (message) => {
   const myMessage = new Model(message);
