@@ -18,7 +18,6 @@ app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-
 routes(app);
 
 // app.use('/app', express.static('public'));	

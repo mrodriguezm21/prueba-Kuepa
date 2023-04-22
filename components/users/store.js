@@ -1,15 +1,15 @@
-require("dotenv").config();
 const Model = require("./model");
 
-const addUser = (user) => {
+const addUser = async (user) => {
   const {username} = user;
 
-  let exist = Model.find({username: username});
+  let exist = await Model.findOne({username: username});
   if (exist) {
     return 409; // Conflict (username already exists)
   }
   const myUser = new Model(user);
   myUser.save();
+  return myUser.id;
 };
 
 const getUsers = async () => {

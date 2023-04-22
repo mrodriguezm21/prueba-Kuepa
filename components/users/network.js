@@ -14,6 +14,19 @@ app.get("/", async (req, res) => {
     }
   });
 
+app.get("/:id", async (req, res) => {
+    try {
+      let message = await controller.getUser(req.params.id);
+      response.success(req, res, message, 200);
+    } catch (error) {
+      if (error === 404) {
+        response.error(req, res, "User not found", 404, error);
+        return;
+      }
+      response.error(req, res, "Unexpected Error", 500, error);
+    }
+});
+
 app.post("/", async (req, res) => {
     try {
       let newUser = await controller.addUser(req.body);

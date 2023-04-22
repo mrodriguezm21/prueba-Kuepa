@@ -3,6 +3,7 @@ const Model = require("./model");
 const addMessage = (message) => {
   const myMessage = new Model(message);
   myMessage.save();
+  return myMessage.id;
 };
 
 const getMessages = async (filterByUser, filterByLesson) => {
