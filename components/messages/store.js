@@ -18,6 +18,7 @@ const getMessages = async (filterByUser, filterByLesson) => {
     const messages = await Model.find(filter).populate("user", {
       username: true,
       name: true,
+      rol: true,
     }).populate("lesson", {});
     return messages;
   } catch (error) {
@@ -52,6 +53,7 @@ const getMessage = async (id) => {
     const message = await Model.findById(id).populate("user", {
       username: true,
       name: true,
+      rol: true,
     });
     return message;
   } catch (error) {
@@ -64,6 +66,7 @@ const getMessageByUserId = async (id) => {
     const message = await Model.find({ user: id }).populate("user", {
       username: true,
       name: true,
+      rol: true,
     });
     return message;
   } catch (error) {

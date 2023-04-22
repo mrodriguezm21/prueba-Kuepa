@@ -10,9 +10,10 @@ const addUser =  async (user) => {
 };
 const getAuth = async (user) => {
   const { username, password } = user;
+  console.log(user);
   try {
     const auth = await Model.findOne({ username: username });
-    
+    console.log(auth);
     const valid = await bcrypt.compare(password, auth.password);
     if (!valid) {
       return 400; // Invalid information

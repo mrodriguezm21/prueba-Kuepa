@@ -12,6 +12,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     },
+  rol: Number,
 });
 
 const model = mongoose.model("User", userSchema);

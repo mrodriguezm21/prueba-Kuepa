@@ -4,7 +4,7 @@ const logger = require("../utils/logger");
 const controller_name = "messageController";
 
 const addUser = (user) => {
-  const { username, name, password } = user;
+  const { username, name, password, rol } = user;
   return new Promise(async (resolve, reject) => {
     if (!username || !name || !password) {
       console.error(logger("Faltan datos", controller_name, "ERROR"));
@@ -13,6 +13,7 @@ const addUser = (user) => {
     const newUser = {
       username: username,
       name: name,
+      rol: rol
     };
     try {
       let resp = await store.add(newUser);
